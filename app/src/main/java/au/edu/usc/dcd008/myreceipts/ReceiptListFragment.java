@@ -52,9 +52,8 @@ public class ReceiptListFragment extends Fragment {
 
         @Override
         public void onClick(View view) {
-            //todo
-            //Intent intent = CrimeActivity.newIntent(getActivity(), mCrime.getId());
-            //startActivity(intent);
+            Intent intent = ReceiptActivity.newIntent(getActivity(), mReceipt.getId());
+            startActivity(intent);
         }
     }
 
