@@ -52,7 +52,7 @@ public class ReceiptListFragment extends Fragment {
 
         @Override
         public void onClick(View view) {
-            Intent intent = ReceiptActivity.newIntent(getActivity(), mReceipt.getId());
+            Intent intent = ReceiptActivity.newIntent(getActivity(), mReceipt.getId(), false);
             startActivity(intent);
         }
     }
@@ -134,7 +134,7 @@ public class ReceiptListFragment extends Fragment {
             case R.id.new_receipt:
                 Receipt receipt = new Receipt();
                 ReceiptLab.get(getActivity()).addReceipt(receipt);
-                Intent intent = ReceiptActivity.newIntent(getActivity(), receipt.getId());
+                Intent intent = ReceiptActivity.newIntent(getActivity(), receipt.getId(), true);
                 startActivity(intent);
                 return true;
            // case R.id.show_help:

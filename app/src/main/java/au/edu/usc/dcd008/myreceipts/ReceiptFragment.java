@@ -35,6 +35,7 @@ import java.util.UUID;
 public class ReceiptFragment extends Fragment {
     private Receipt mReceipt;
     private File mPhotoFile;
+    private  boolean mIsNewReceipt;
 
     private EditText mTitleField;
     private EditText mShopNameField;
@@ -47,14 +48,16 @@ public class ReceiptFragment extends Fragment {
     private ImageView mPhotoView;
 
     private static final String ARG_RECEIPT_ID = "receipt_id";
+    private static final String ARG_IS_NEW_RECEIPT = "is_new_receipt";
     private static final String DIALOG_DATE = "DialogDate";
 
     private static final int REQUEST_DATE = 0;
     private static final int REQUEST_PHOTO = 1;
 
-    public static ReceiptFragment newInstance(UUID receiptID){
+    public static ReceiptFragment newInstance(UUID receiptID, boolean isNewReceipt){
         Bundle args = new Bundle();
         args.putSerializable(ARG_RECEIPT_ID, receiptID);
+        args.putBoolean(ARG_IS_NEW_RECEIPT, isNewReceipt);
 
         ReceiptFragment fragment = new ReceiptFragment();
         fragment.setArguments(args);
@@ -66,6 +69,7 @@ public class ReceiptFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         UUID receiptId = (UUID) getArguments().getSerializable(ARG_RECEIPT_ID);
+        mIsNewReceipt = getArguments().getBoolean(ARG_IS_NEW_RECEIPT);
         mReceipt = ReceiptLab.get(getActivity()).getReceipt(receiptId);
         mPhotoFile = ReceiptLab.get(getActivity()).getPhotoFile(mReceipt);
     }
@@ -84,6 +88,9 @@ public class ReceiptFragment extends Fragment {
                 getActivity().finish();
             }
         });
+        if (mIsNewReceipt){
+            mDeleteButton.setVisibility(View.INVISIBLE);
+        }
 
         mTitleField = v.findViewById(R.id.receipt_title);
         mTitleField.setText(mReceipt.getTitle());
