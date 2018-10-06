@@ -230,7 +230,15 @@ public class ReceiptFragment extends Fragment {
     }
 
     private String getReceiptReport(){
-       return "todo: make report"; //todo: make report
+        String dateFormat = "EEE, MMM dd";
+        String dateString = android.text.format.DateFormat.format(
+                dateFormat, mReceipt.getDate()
+        ).toString();
+
+        String report = getString(R.string.receipt_report, dateString, mReceipt.getTitle(),
+                mReceipt.getShopName(), mReceipt.getComment());
+
+       return report;
 
     }
 
