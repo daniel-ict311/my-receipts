@@ -1,22 +1,27 @@
 package au.edu.usc.dcd008.myreceipts;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Looper;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +31,15 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.io.File;
 import java.util.Date;
@@ -36,6 +50,7 @@ public class ReceiptFragment extends Fragment {
     private Receipt mReceipt;
     private File mPhotoFile;
     private  boolean mIsNewReceipt;
+    private GoogleApiClient mClient;
 
     private EditText mTitleField;
     private EditText mShopNameField;
@@ -46,6 +61,10 @@ public class ReceiptFragment extends Fragment {
     private Button mDeleteButton;
     private ImageButton mPhotoButton;
     private ImageView mPhotoView;
+
+    private TextView mLocationField;
+    private Button mShowMapButton;
+
 
     private static final String ARG_RECEIPT_ID = "receipt_id";
     private static final String ARG_IS_NEW_RECEIPT = "is_new_receipt";
@@ -65,6 +84,18 @@ public class ReceiptFragment extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        mClient.connect();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mClient.disconnect();
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -72,6 +103,49 @@ public class ReceiptFragment extends Fragment {
         mIsNewReceipt = getArguments().getBoolean(ARG_IS_NEW_RECEIPT);
         mReceipt = ReceiptLab.get(getActivity()).getReceipt(receiptId);
         mPhotoFile = ReceiptLab.get(getActivity()).getPhotoFile(mReceipt);
+        mClient = new GoogleApiClient.Builder(getActivity())
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks(){
+
+                    @Override
+                    public void onConnected(@Nullable Bundle bundle) {
+                        if (mIsNewReceipt){
+                            LocationRequest request = LocationRequest.create();
+                            request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+                            request.setNumUpdates(1);
+                            request.setInterval(0);
+                            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
+                                    != PackageManager.PERMISSION_GRANTED) {
+                                return;
+                            }
+                            LocationServices.getFusedLocationProviderClient(getActivity())
+                                    .requestLocationUpdates(request, new LocationCallback() {
+                                        @Override
+                                        public void onLocationResult(LocationResult locationResult) {
+                                            super.onLocationResult(locationResult);
+                                            Location location = locationResult.getLastLocation();
+                                            setLocation(location);
+
+                                        }
+                                    }, null);
+                            }
+                    }
+
+                    @Override
+                    public void onConnectionSuspended(int i) {
+
+                    }
+                })
+                .build();
+    }
+
+    private void setLocation(Location location) {
+        mReceipt.setLongitude(location.getLongitude());
+        mReceipt.setLatitude(location.getLatitude());
+        mLocationField.setText(
+                getString(R.string.location_text,
+                mReceipt.getLatitude(),
+                mReceipt.getLongitude()));
     }
 
     @Nullable
@@ -79,6 +153,9 @@ public class ReceiptFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_receipt, container, false);
         PackageManager packageManager = getActivity().getPackageManager();
+
+        mLocationField = v.findViewById(R.id.location_label);
+        mShowMapButton = v.findViewById(R.id.show_map_button);
 
         mDeleteButton = v.findViewById(R.id.delete_receipt);
         mDeleteButton.setOnClickListener(new View.OnClickListener() {
@@ -90,6 +167,11 @@ public class ReceiptFragment extends Fragment {
         });
         if (mIsNewReceipt){
             mDeleteButton.setVisibility(View.INVISIBLE);
+        } else {
+            mLocationField.setText(
+                    getString(R.string.location_text,
+                            mReceipt.getLatitude(),
+                            mReceipt.getLongitude()));
         }
 
         mTitleField = v.findViewById(R.id.receipt_title);

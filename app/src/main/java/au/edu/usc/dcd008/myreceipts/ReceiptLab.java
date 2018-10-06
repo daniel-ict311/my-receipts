@@ -46,9 +46,8 @@ public class ReceiptLab {
         values.put(ReceiptTable.cols.DATE, receipt.getDate().getTime());
         values.put(ReceiptTable.cols.SHOP_NAME, receipt.getShopName());
         values.put(ReceiptTable.cols.COMMENT, receipt.getComment());
-        //todo: values.put(ReceiptTable.cols.LOCATION, receipt.getLocation());
-
-
+        values.put(ReceiptTable.cols.LONGITUDE, receipt.getLongitude());
+        values.put(ReceiptTable.cols.LATITUDE, receipt.getLatitude());
         return values;
     }
 

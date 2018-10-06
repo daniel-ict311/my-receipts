@@ -53,6 +53,11 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/receipt_title_hint"/>
 
+            <Button
+                android:id="@+id/receipt_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
         </LinearLayout>
 
     </LinearLayout>
@@ -82,10 +87,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/receipt_comment_hint"/>
 
-    <Button
-        android:id="@+id/receipt_date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+
     
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
