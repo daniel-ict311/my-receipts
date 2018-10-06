@@ -156,6 +156,14 @@ public class ReceiptFragment extends Fragment {
 
         mLocationField = v.findViewById(R.id.location_label);
         mShowMapButton = v.findViewById(R.id.show_map_button);
+        mShowMapButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), MapsActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         mDeleteButton = v.findViewById(R.id.delete_receipt);
         mDeleteButton.setOnClickListener(new View.OnClickListener() {
