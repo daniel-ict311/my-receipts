@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">MyReceipts</string>
+    
+    <string name="receipt_title_hint">Enter a title for the receipt.</string>
+    <string name="receipt_title_label">Title</string>
+
+    <string name="receipt_comment_label">Comment:</string>
+    <string name="receipt_comment_hint">Add comment</string>
+
+    <string name="receipt_shop_name_label">Shop Name:</string>
+    <string name="receipt_shop_name_hint">Name of shop</string>
+
+    <string name="receipt_report_text">Report</string>
+    <string name="receipt_delete_text">Delete</string>
+
+
+    <string name="date_picker_title">Date of receipt:</string>
+
+    <string name="receipt_photo_description">Receipt Photo</string>
+
+    <string name="new_receipt">New Receipt</string>
+
+    <string name="receipt_report_subject">MyReceipts Crime Report</string>
+    <string name="send_report">Send receipt report via</string>
 </resources>

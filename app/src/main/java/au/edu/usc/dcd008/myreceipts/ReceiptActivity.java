@@ -1,13 +1,26 @@
 package au.edu.usc.dcd008.myreceipts;
 
+import android.content.Context;
+import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class ReceiptActivity extends AppCompatActivity {
+import java.util.UUID;
+
+public class ReceiptActivity extends SingleFragmentActivity {
+    public static final String EXTRA_RECEIPT_ID =
+            "au.edu.usc.dcd008.myreceipts.receipt_id";
+
+    public static Intent newIntent(Context packageContext, UUID receiptId){
+        Intent intent = new Intent(packageContext, ReceiptActivity.class);
+        intent.putExtra(EXTRA_RECEIPT_ID, receiptId);
+        return intent;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_receipt);
+    protected Fragment createFragment() {
+        UUID receiptId = (UUID) getIntent().getSerializableExtra(EXTRA_RECEIPT_ID);
+        return ReceiptFragment.newInstance(receiptId);
     }
 }
