@@ -8,6 +8,9 @@
         android:title="@string/new_receipt"
         app:showAsAction="ifRoom|withText"/>
 
-    <!--todo: add help menu button-->
-
+    <item
+        android:id="@+id/help"
+        android:icon="@drawable/ic_menu_help"
+        android:title="@string/help"
+        app:showAsAction="ifRoom|withText"/>
 </menu>

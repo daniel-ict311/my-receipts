@@ -1,6 +1,7 @@
 package au.edu.usc.dcd008.myreceipts;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,6 +23,7 @@ import java.util.List;
 public class ReceiptListFragment extends Fragment {
     private RecyclerView mReceiptRecyclerView;
     private ReceiptAdapter mAdapter;
+    private static final String HELP_URL = "https://en.wikipedia.org/wiki/Receipt";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,6 +38,7 @@ public class ReceiptListFragment extends Fragment {
         private TextView mDateTextView;
         private TextView mShopNameView;
         private Receipt mReceipt;
+
         public ReceiptHolder(LayoutInflater inflater, ViewGroup parent){
             //you can find the view in ReceiptHolder.itemView
             super(inflater.inflate(R.layout.list_item_receipt, parent, false));
@@ -137,9 +141,11 @@ public class ReceiptListFragment extends Fragment {
                 Intent intent = ReceiptActivity.newIntent(getActivity(), receipt.getId(), true);
                 startActivity(intent);
                 return true;
-           // case R.id.show_help:
-                //todo
-                //return true;
+           case R.id.help:
+               Intent help_intent = HelpPageActivity.newIntent(
+                       getActivity(),Uri.parse(Uri.decode(HELP_URL)));
+               startActivity(help_intent);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

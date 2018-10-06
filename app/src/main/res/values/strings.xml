@@ -19,6 +19,7 @@
     <string name="receipt_photo_description">Receipt Photo</string>
 
     <string name="new_receipt">New Receipt</string>
+    <string name="help">Help</string>
 
     <string name="receipt_report_subject">MyReceipts Crime Report</string>
     <string name="send_report">Send receipt report via</string>
