@@ -159,7 +159,8 @@ public class ReceiptFragment extends Fragment {
         mShowMapButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), MapsActivity.class);
+                Intent intent = MapsActivity.newIntent(getContext(),
+                        mReceipt.getLatitude(), mReceipt.getLongitude());
                 startActivity(intent);
             }
         });

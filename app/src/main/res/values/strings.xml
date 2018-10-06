@@ -27,5 +27,6 @@
 
     <string name="google_maps_key">AIzaSyCpOCxsPbl-tXlRIV4nzhnRibIYymdznfY</string>
     <string name="title_activity_maps">Receipt Location</string>
+    <string name="marker_title">Receipt Location</string>
 
 </resources>
