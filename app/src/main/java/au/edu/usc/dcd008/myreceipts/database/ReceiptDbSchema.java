@@ -10,7 +10,8 @@ public class ReceiptDbSchema {
             public static final String DATE = "date";
             public static final String SHOP_NAME = "shop_name";
             public static final String COMMENT = "comment";
-            public static final String LOCATION = "location";
+            public static final String LONGITUDE = "longitude";
+            public static final String LATITUDE = "latitude";
         }
     }
 }

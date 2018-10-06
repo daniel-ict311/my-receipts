@@ -9,7 +9,8 @@ public class Receipt {
         private String mShopName;
         private String mComment;
         private Date mDate;
-        //missing: location
+        private Double mLatitude;
+        private Double mLongitude;
 
         public Receipt(){
             this(UUID.randomUUID());
@@ -59,4 +60,20 @@ public class Receipt {
         public void setComment(String comment) {
             mComment = comment;
         }
+
+    public Double getLatitude() {
+        return mLatitude;
     }
+
+    public void setLatitude(Double latitude) {
+        mLatitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return mLongitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        mLongitude = longitude;
+    }
+}

@@ -13,10 +13,9 @@
     <string name="receipt_report_text">Report</string>
     <string name="receipt_delete_text">Delete</string>
 
-
     <string name="date_picker_title">Date of receipt:</string>
-
     <string name="receipt_photo_description">Receipt Photo</string>
+    <string name="show_map_text">Show Map</string>
 
     <string name="new_receipt">New Receipt</string>
     <string name="help">Help</string>
