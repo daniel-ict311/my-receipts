@@ -32,7 +32,7 @@ public class ReceiptListFragment extends Fragment {
     }
 
 
-    //holds a list_item_receipt views, binds it to different Crime objects
+    //holds a list_item_receipt view, binds it to different Crime objects
     private class ReceiptHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView mTitleTextView;
         private TextView mDateTextView;
